@@ -5,19 +5,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get('/webhook', (req, res) => {
-  const mode = req.query['hub.mode'];
-  const token = req.query['hub.verify_token'];
-  const challenge = req.query['hub.challenge'];
-
-  if (mode && token) {
-    if (mode === 'subscribe' && token ===('1234') {
-      res.status(200).send(challenge);
-    } else {
-      res.sendStatus(403);
-    }
-  }
-});
-
+  res.send(req.query['hub.challenge']);
 app.post('/webhook', async (req, res) => {
   const userMessage = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body;
   
