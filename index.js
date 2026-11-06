@@ -4,6 +4,20 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.get('/webhook', (req, res) => {
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+
+  if (mode && token) {
+    if (mode === 'subscribe' && token === 'vibecoding') {
+      res.status(200).send(challenge);
+    } else {
+      res.sendStatus(403);
+    }
+  }
+});
+
 app.post('/webhook', async (req, res) => {
   const userMessage = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body;
   
@@ -35,3 +49,4 @@ app.post('/webhook', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
