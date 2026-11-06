@@ -10,7 +10,7 @@ app.get('/webhook', (req, res) => {
   const challenge = req.query['hub.challenge'];
 
   if (mode && token) {
-    if (mode === 'subscribe' && token === 'vibecoding') {
+    if (mode === 'subscribe' && token ===('1234') {
       res.status(200).send(challenge);
     } else {
       res.sendStatus(403);
